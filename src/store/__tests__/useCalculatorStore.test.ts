@@ -47,8 +47,8 @@ describe('useCalculatorStore Zustand Store', () => {
 
     // 1. Add fitting
     store.addFitting({
-      type: 'checkValve',
-      name: 'Check Valve (50A)',
+      type: 'flangedJoint',
+      name: 'フランジ継手',
       count: 1,
       equivalentLengthM: 5.0,
       lossCoefficientK: 2.0,

@@ -37,8 +37,8 @@ describe('Pump Specification & Total Head Engine', () => {
     fittings: [
       {
         id: 'f-1',
-        type: 'elbow90',
-        name: '90° Elbow',
+        type: 'threadedSocketJoint',
+        name: 'ねじ込み・差込み継手',
         count: 4,
         equivalentLengthM: 1.5,
         lossCoefficientK: 0.75,

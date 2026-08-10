@@ -6,8 +6,8 @@ export const CalculationSummaryCard: React.FC = () => {
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm text-slate-800">
-      <h3 className="text-xs font-bold mb-3 text-slate-700 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-200 pb-2">
-        <span>📊</span> 圧力損失 兼 ポンプ選定 試算サマリー
+      <h3 className="text-xs font-bold mb-3 text-slate-700 uppercase tracking-wider border-b border-slate-200 pb-2">
+        圧力損失 兼 ポンプ選定 試算サマリー
       </h3>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">

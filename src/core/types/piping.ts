@@ -13,7 +13,12 @@ export interface PipeSegment {
   hazenWilliamsC: number;    // Hazen-Williams friction coefficient C
 }
 
-export type FittingType = 'elbow90' | 'elbow45' | 'teeFlowThrough' | 'teeBranch' | 'gateValve' | 'checkValve' | 'globeValve';
+export type FittingType =
+  | 'threadedSocketJoint' // ねじ込み・差込み継手
+  | 'buttWeldedJoint'     // 突合せ溶接継手
+  | 'flangedJoint'        // フランジ継手
+  | 'unionJoint'          // ユニオン継手
+  | 'spigotSocketJoint';  // インロー継手
 
 export interface FittingItem {
   id: string;

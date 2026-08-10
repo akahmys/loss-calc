@@ -14,13 +14,11 @@ interface PaletteItem {
 }
 
 const PALETTE_ITEMS: PaletteItem[] = [
-  { type: 'elbow90', label: '90° エルボ', subLabel: '90° Elbow', icon: '↩️' },
-  { type: 'elbow45', label: '45° エルボ', subLabel: '45° Elbow', icon: '↗️' },
-  { type: 'gateValve', label: '仕切弁', subLabel: 'Gate Valve', icon: '🚪' },
-  { type: 'checkValve', label: '逆止弁', subLabel: 'Check Valve', icon: '🛡️' },
-  { type: 'globeValve', label: '玉形弁', subLabel: 'Globe Valve', icon: '🚰' },
-  { type: 'teeBranch', label: 'チーズ (分流)', subLabel: 'Tee Branch', icon: '🔀' },
-  { type: 'teeFlowThrough', label: 'チーズ (直流)', subLabel: 'Tee Run', icon: '➡️' },
+  { type: 'threadedSocketJoint', label: 'ねじ込み・差込み継手', subLabel: 'Threaded / Socket Joint', icon: '🔗' },
+  { type: 'buttWeldedJoint', label: '突合せ溶接継手', subLabel: 'Butt Welded Joint', icon: '⚡' },
+  { type: 'flangedJoint', label: 'フランジ継手', subLabel: 'Flanged Joint', icon: '⭕' },
+  { type: 'unionJoint', label: 'ユニオン継手', subLabel: 'Union Joint', icon: '⚙️' },
+  { type: 'spigotSocketJoint', label: 'インロー継手', subLabel: 'Spigot Socket Joint', icon: '⚓' },
 ];
 
 export const ComponentPalette: React.FC = () => {

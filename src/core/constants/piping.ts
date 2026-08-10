@@ -67,26 +67,22 @@ export function getPipeInnerDiameterM(nominalA: number, material: PipeMaterial):
  * Fitting & valve standard minor loss coefficient K values
  */
 export const FITTING_LOSS_COEFFICIENT_K: Record<FittingType, number> = {
-  elbow90: 0.75,
-  elbow45: 0.35,
-  teeFlowThrough: 0.40,
-  teeBranch: 1.50,
-  gateValve: 0.17,
-  checkValve: 2.00,
-  globeValve: 6.00,
+  threadedSocketJoint: 0.10,
+  buttWeldedJoint: 0.05,
+  flangedJoint: 0.15,
+  unionJoint: 0.12,
+  spigotSocketJoint: 0.10,
 };
 
 /**
  * Fitting equivalent length ratio L/D (equivalent length divided by inner diameter)
  */
 export const FITTING_EQUIVALENT_LENGTH_LD: Record<FittingType, number> = {
-  elbow90: 30,
-  elbow45: 16,
-  teeFlowThrough: 20,
-  teeBranch: 60,
-  gateValve: 8,
-  checkValve: 100,
-  globeValve: 340,
+  threadedSocketJoint: 5,
+  buttWeldedJoint: 2,
+  flangedJoint: 7,
+  unionJoint: 6,
+  spigotSocketJoint: 5,
 };
 
 /**

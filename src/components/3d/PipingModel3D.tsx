@@ -67,10 +67,7 @@ export const PipingModel3D: React.FC = () => {
       });
 
       currentPos = nextPos.clone();
-
-      if (item.type.startsWith('elbow') || item.type === 'teeBranch') {
-        dirIndex = (dirIndex + 1) % dirs.length;
-      }
+      dirIndex = (dirIndex + 1) % dirs.length;
     });
 
     const finalDir = dirs[dirIndex].clone();

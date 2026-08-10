@@ -9,13 +9,11 @@ import {
 import { MinorLossMethod } from '../../core/calc';
 
 const FITTING_OPTIONS: { type: FittingType; label: string }[] = [
-  { type: 'elbow90', label: '90° エルボ (90° Elbow)' },
-  { type: 'elbow45', label: '45° エルボ (45° Elbow)' },
-  { type: 'teeFlowThrough', label: 'チーズ 直流 (Tee Run)' },
-  { type: 'teeBranch', label: 'チーズ 分流 (Tee Branch)' },
-  { type: 'gateValve', label: '仕切弁 (Gate Valve)' },
-  { type: 'checkValve', label: '逆止弁 (Check Valve)' },
-  { type: 'globeValve', label: '玉形弁 (Globe Valve)' },
+  { type: 'threadedSocketJoint', label: 'ねじ込み・差込み継手' },
+  { type: 'buttWeldedJoint', label: '突合せ溶接継手' },
+  { type: 'flangedJoint', label: 'フランジ継手' },
+  { type: 'unionJoint', label: 'ユニオン継手' },
+  { type: 'spigotSocketJoint', label: 'インロー継手' },
 ];
 
 export const FittingManagerForm: React.FC = () => {
@@ -27,7 +25,7 @@ export const FittingManagerForm: React.FC = () => {
   const removeFitting = useCalculatorStore((state) => state.removeFitting);
   const setMinorLossMethod = useCalculatorStore((state) => state.setMinorLossMethod);
 
-  const [selectedType, setSelectedType] = useState<FittingType>('elbow90');
+  const [selectedType, setSelectedType] = useState<FittingType>('threadedSocketJoint');
   const [inputCount, setInputCount] = useState<number>(1);
 
   const handleAddFitting = (e: React.FormEvent) => {

@@ -10,19 +10,19 @@ import { GRAVITY_M_S2 } from '../friction';
 describe('Fitting & Valve Minor Loss Engine', () => {
   const sampleElbow: FittingItem = {
     id: 'f-1',
-    type: 'elbow90',
-    name: '90° Elbow (50A)',
+    type: 'threadedSocketJoint',
+    name: 'ねじ込み・差込み継手',
     count: 4,
-    equivalentLengthM: 1.5, // 30 * 0.05m
+    equivalentLengthM: 1.5,
     lossCoefficientK: 0.75,
   };
 
   const sampleValve: FittingItem = {
     id: 'f-2',
-    type: 'gateValve',
-    name: 'Gate Valve (50A)',
+    type: 'flangedJoint',
+    name: 'フランジ継手',
     count: 1,
-    equivalentLengthM: 0.4, // 8 * 0.05m
+    equivalentLengthM: 0.4,
     lossCoefficientK: 0.17,
   };
 
