@@ -1,107 +1,116 @@
 import React, { useState } from 'react';
 import {
-  FluidInputForm,
-  PipeInputForm,
-  FittingManagerForm,
-  PumpDutyForm,
+  ComponentInspector,
   CalculationSummaryCard,
 } from './components/calculator';
 import { PipingCanvas3D } from './components/3d';
 import { PumpSpecReportView } from './components/report';
+import { useCalculatorStore } from './store/useCalculatorStore';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'calculator' | 'report'>('calculator');
+  const [activeTab, setActiveTab] = useState<'studio' | 'report'>('studio');
+  const result = useCalculatorStore((state) => state.calculationResult);
 
   const handlePrint = () => {
     window.print();
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
-      {/* Top Navigation Bar */}
-      <header className="bg-slate-900/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md print:hidden">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <div className="min-h-screen bg-slate-100 text-slate-800 flex flex-col font-sans">
+      {/* Studio Top Bar */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm print:hidden">
+        <div className="w-full px-4 py-2.5 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-cyan-950/50">
+            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-sm shadow">
               LC
             </div>
             <div>
-              <h1 className="font-bold text-lg leading-none tracking-tight text-white">
-                Loss Calc <span className="text-xs text-cyan-400 font-normal font-mono ml-2">v1.0</span>
+              <h1 className="font-bold text-sm sm:text-base leading-none tracking-tight text-slate-900 flex items-center gap-2">
+                Loss Calc Studio <span className="text-[10px] bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-mono border border-blue-200">アイソメ図面モード</span>
               </h1>
-              <p className="text-[11px] text-slate-400 leading-tight">
-                ポンプ仕様書 兼 配管圧力損失計算システム
+              <p className="text-[10px] text-slate-500 leading-tight hidden sm:block">
+                配管圧力損失・ポンプ全揚程・モータ出力 試算システム
               </p>
             </div>
           </div>
 
+          {/* Quick Header Indicator Pill */}
+          <div className="hidden md:flex items-center gap-4 bg-slate-50 px-4 py-1.5 rounded-full border border-slate-200 text-xs font-mono">
+            <div>
+              <span className="text-slate-500 mr-1">計画全揚程 H_d:</span>
+              <span className="text-blue-700 font-bold">{result.designHeadM.toFixed(2)} m</span>
+            </div>
+            <div className="w-px h-3 bg-slate-300" />
+            <div>
+              <span className="text-slate-500 mr-1">モータ P_m:</span>
+              <span className="text-emerald-700 font-bold">{result.motorPowerKw.toFixed(2)} kW</span>
+            </div>
+          </div>
+
+          {/* Action Tabs */}
           <div className="flex items-center gap-2">
-            <div className="bg-slate-800 p-1 rounded-xl border border-slate-700/60 flex text-xs">
+            <div className="bg-slate-100 p-1 rounded-xl border border-slate-200 flex text-xs">
               <button
                 type="button"
-                onClick={() => setActiveTab('calculator')}
+                onClick={() => setActiveTab('studio')}
                 className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                  activeTab === 'calculator'
-                    ? 'bg-cyan-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                  activeTab === 'studio'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                計算シミュレータ (3D View)
+                配管図面スタジオ
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('report')}
                 className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
                   activeTab === 'report'
-                    ? 'bg-cyan-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                仕様書レポート (Spec Sheet)
+                仕様書レポート
               </button>
             </div>
 
             <button
               type="button"
               onClick={handlePrint}
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs px-3.5 py-2 rounded-xl transition-colors shadow-lg shadow-emerald-950/40 flex items-center gap-1.5"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs px-3.5 py-2 rounded-xl transition-colors shadow flex items-center gap-1.5"
             >
-              <span>🖨️</span> 印刷 / PDF出力
+              <span>🖨️</span> <span className="hidden sm:inline">印刷 / PDF</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Main Content Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
-        {/* Print Only Notice */}
+      {/* Main Studio Body: Expanded Canvas + Inspector Layout */}
+      <main className="flex-1 w-full p-3 space-y-3">
+        {/* Print Layout */}
         <div className="hidden print:block mb-4">
           <PumpSpecReportView />
         </div>
 
         {/* Screen Interactive Tabs */}
         <div className="print:hidden">
-          {activeTab === 'calculator' ? (
-            <div className="space-y-6">
-              {/* Top Section: Live Calculation Summary Card */}
-              <CalculationSummaryCard />
-
-              {/* Middle Section: 3D Isometric View & Pump Duty */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
+          {activeTab === 'studio' ? (
+            <div className="space-y-3">
+              {/* Studio Workspace: Expanded 2-column layout (Canvas 9 cols = 75%, Inspector 3 cols = 25%) */}
+              <div className="grid grid-cols-12 gap-3 items-start w-full">
+                {/* Expanded Interactive Isometric Canvas (9 cols) */}
+                <div className="col-span-12 lg:col-span-9 min-w-0">
                   <PipingCanvas3D />
                 </div>
-                <div>
-                  <PumpDutyForm />
+
+                {/* Component Inspector (3 cols) */}
+                <div className="col-span-12 lg:col-span-3">
+                  <ComponentInspector />
                 </div>
               </div>
 
-              {/* Bottom Section: Fluid, Pipe, Fittings Inputs */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <FluidInputForm />
-                <PipeInputForm />
-                <FittingManagerForm />
-              </div>
+              {/* Bottom Section: Real-time Hydraulic Calculation Summary */}
+              <CalculationSummaryCard />
             </div>
           ) : (
             <div className="py-4">
@@ -111,9 +120,9 @@ export const App: React.FC = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500 print:hidden">
-        Loss Calc Engine &copy; 2026. Darcy-Weisbach & Hazen-Williams Fluid Dynamics Equations.
+      {/* Studio Footer */}
+      <footer className="border-t border-slate-200 py-2.5 text-center text-xs text-slate-500 bg-white print:hidden">
+        Loss Calc Studio &copy; 2026. Interactive Piping Builder & Hydraulic Loss Engine.
       </footer>
     </div>
   );

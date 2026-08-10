@@ -23,10 +23,14 @@ export interface CalculatorState {
   dutyInput: PumpDutyInput;
   minorLossMethod: MinorLossMethod;
 
+  // Selected 3D component state ('pump' | 'pipe' | fittingId)
+  selectedComponentId: string | null;
+
   // Calculated results
   calculationResult: PumpCalculationResult;
 
   // Actions
+  selectComponent: (id: string | null) => void;
   setTemperatureCelsius: (tempCelsius: number) => void;
   setPipeSegment: (updates: Partial<PipeSegment>) => void;
   addFitting: (fitting: Omit<FittingItem, 'id'>) => void;
@@ -55,7 +59,7 @@ const initialPipeLine: PipeLineSystem = {
     {
       id: 'fit-1',
       type: 'elbow90',
-      name: '90° Elbow (50A)',
+      name: '90° エルボ',
       count: 4,
       equivalentLengthM: 1.5,
       lossCoefficientK: 0.75,
@@ -63,7 +67,7 @@ const initialPipeLine: PipeLineSystem = {
     {
       id: 'fit-2',
       type: 'gateValve',
-      name: 'Gate Valve (50A)',
+      name: '仕切弁 (Gate Valve)',
       count: 1,
       equivalentLengthM: 0.4,
       lossCoefficientK: 0.17,
@@ -93,7 +97,12 @@ export const useCalculatorStore = create<CalculatorState>((set) => ({
   pipeLine: initialPipeLine,
   dutyInput: initialDutyInput,
   minorLossMethod: initialMinorLossMethod,
+  selectedComponentId: 'pipe', // Default selection
   calculationResult: initialCalculationResult,
+
+  selectComponent: (id: string | null) => {
+    set({ selectedComponentId: id });
+  },
 
   setTemperatureCelsius: (tempCelsius: number) => {
     const fluid = getWaterProperties(tempCelsius);
@@ -148,9 +157,10 @@ export const useCalculatorStore = create<CalculatorState>((set) => ({
 
   addFitting: (fittingData) => {
     set((state) => {
+      const newId = `fit-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
       const newFitting: FittingItem = {
         ...fittingData,
-        id: `fit-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        id: newId,
       };
 
       const updatedPipeLine: PipeLineSystem = {
@@ -165,7 +175,11 @@ export const useCalculatorStore = create<CalculatorState>((set) => ({
         state.minorLossMethod
       );
 
-      return { pipeLine: updatedPipeLine, calculationResult: result };
+      return {
+        pipeLine: updatedPipeLine,
+        selectedComponentId: newId, // Auto select newly added fitting
+        calculationResult: result,
+      };
     });
   },
 
@@ -207,7 +221,11 @@ export const useCalculatorStore = create<CalculatorState>((set) => ({
         state.minorLossMethod
       );
 
-      return { pipeLine: updatedPipeLine, calculationResult: result };
+      return {
+        pipeLine: updatedPipeLine,
+        selectedComponentId: state.selectedComponentId === id ? 'pipe' : state.selectedComponentId,
+        calculationResult: result,
+      };
     });
   },
 
