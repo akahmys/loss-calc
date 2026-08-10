@@ -25,6 +25,8 @@ Project quality standards, architecture rules, and operational protocols are man
 2. **Unidirectional Data Flow**: Changes in the 3D piping model pass through the state management layer to update the calculation engine, maintaining consistency between visual representation and calculated results.
 3. **Responsive & Print-Ready Design**: Ensure excellent in-browser usability as well as beautiful A4 layout for printed or exported calculation reports.
 4. **Language Policy**: All source code, commit messages, comments, and project documentation (Markdown) must be written in **English**. Dialogues and discussions with the user are conducted in **Japanese**.
+5. **Concise & Clear Documentation**: Project documentation must be kept concise, unambiguous, and structurally clear so that AI agents can parse and understand requirements without ambiguity or redundancy.
+
 
 
 
