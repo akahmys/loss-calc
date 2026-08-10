@@ -4,9 +4,10 @@ This document governs task planning, feature design, calculation validation, and
 
 ---
 
-## 1. Planning Workflow
+## 1. Planning & Milestone Management
 
-Before introducing major features, significant UI changes, or expanding the calculation engine (e.g., adding fitting libraries or advanced loss equations), create an actionable implementation plan.
+1. **Master Plan (`PLANS.md`)**: Project tasks, long-term roadmap phases, and short-term execution plans must be maintained in `PLANS.md` at the project root.
+2. **Atomic Work Units (AWU)**: Short-term plans must be broken down into Atomic Work Units (AWU)—small, single-responsibility tasks that can be independently built, tested, and committed.
 
 ---
 
@@ -14,5 +15,6 @@ Before introducing major features, significant UI changes, or expanding the calc
 
 1. **Specification First**: Piping standards (JIS / ISO), pressure loss equations, and fitting equivalent length tables are defined as clear constants (`src/core/constants/`).
 2. **Type-Driven Development**: Define and finalize TypeScript interfaces in `src/core/types/` before implementing calculation logic.
+
 
 
