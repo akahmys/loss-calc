@@ -1,0 +1,17 @@
+title = "Loss Calc Secret & PII Scan Config"
+
+[allowlist]
+description = "Global allowlist"
+paths = [
+  '''^\.git/''',
+  '''node_modules/'''
+]
+
+[[rules]]
+id = "personal-name-jun-kato"
+description = "Detect Personal Name (Jun Kato) PII Leakage"
+regex = '''(?i)\b(jun[\s._-]*kato|kato[\s._-]*jun)\b'''
+keywords = [
+  "jun",
+  "kato"
+]
